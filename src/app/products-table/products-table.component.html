@@ -1,0 +1,64 @@
+<div class="card">
+  <p-table [value]="products" [paginator]="true"
+           [rows]="rowsPerPage" [totalRecords]="products.length" [rowsPerPageOptions]="[5,10,20]"
+           [rowHover]="false" [loading]="loading"
+           [(selection)]="selectedProducts" (onRowSelect)="onSelectProducts()" (onRowUnselect)="onUnSelectProducts()">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>
+          <div class="flex justify-content-between align-items-center">
+            Image
+          </div>
+        </th>
+        <th pSortableColumn="title">
+          <div class="flex justify-content-between align-items-center">
+            Name
+            <p-sortIcon field="title"></p-sortIcon>
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-content-between align-items-center">
+            Description
+          </div>
+        </th>
+        <th pSortableColumn="price" style="min-width: 5rem">
+          <div class="flex justify-content-between align-items-center">
+            Price $
+            <p-sortIcon field="price"></p-sortIcon>
+          </div>
+        </th>
+        <th style="width: 4rem">Selected</th>
+        <th style="width: 4rem">Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td class="text-center">
+          <ng-container *ngIf="product.image; else noImage">
+            <img src="{{imagesUrl+product.image}}" alt="{{product.title}}" width="35" height="35">
+          </ng-container>
+          <ng-template #noImage>
+            <i class="pi pi-image" style="font-size: 2rem"></i>
+          </ng-template>
+
+        </td>
+        <td>
+          <span class="p-column-title">Name</span>
+          {{product.title}}
+        </td>
+        <td>{{product.description}}</td>
+        <td class="text-right">
+          <span class="p-column-title">Price</span>
+          <span> {{product.price| currency: 'USD':'symbol'}}</span>
+        </td>
+        <td class="text-center">
+          <p-tableCheckbox  [disabled]="mode==='ReadOnly'" [value]="product"></p-tableCheckbox>
+        </td>
+        <td>
+          <app-action-buttons [actions]="actions" (selectedAction)="onActionSelected($event, product)"></app-action-buttons>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</div>

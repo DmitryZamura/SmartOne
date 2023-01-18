@@ -1,0 +1,60 @@
+<p-dialog [visible]="display" [modal]="true" [breakpoints]="{'960px': '50vw', '640px': '100vw'}"
+          [draggable]="false" [resizable]="false" (visibleChange)="onClose()">
+  <ng-template pTemplate="header">
+    <h3>{{title}}</h3>
+  </ng-template>
+  <form *ngIf="productForm" [formGroup]="productForm" (ngSubmit)="onSubmit()" #form="ngForm">
+    <div class="p-fluid grid">
+      <div class="field col-12 md:col-6">
+        <label for="title" class="block">Name *</label>
+        <input type="text" id="title" name="title" pInputText formControlName="title"
+               class="p-inputtext-sm {{productForm.controls['title'].invalid?'ng-invalid ng-dirty':''}}" required>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <label for="brand" class="block">Brand *</label>
+        <input type="text" id="brand" name="brand" pInputText formControlName="brand"
+               class="p-inputtext-sm {{productForm.controls['brand'].invalid?'ng-invalid ng-dirty':''}}" required>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <label for="category" class="block">Category *</label>
+        <input type="text" id="category" name="category" pInputText formControlName="category"
+               class="p-inputtext-sm {{productForm.controls['category'].invalid?'ng-invalid ng-dirty':''}}" required>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <label for="price" class="block">Price *</label>
+      <p-inputNumber  mode="currency" id="price" name="price" currency="USD" locale="en-US" formControlName="price"
+                      class="p-inputtext-sm {{productForm.controls['price'].invalid?'ng-invalid ng-dirty':''}}"
+      ></p-inputNumber>
+      </div>
+
+      <div class="field col-12">
+        <label for="description" class="block">Decription</label>
+        <textarea pInputTextarea [rows]="7" [autoResize]="false"
+                  id="description" name="description" pInputText formControlName="description"
+                  class="p-inputtext-sm  {{productForm.controls['description'].invalid?'ng-invalid ng-dirty':''}}"
+        ></textarea>
+
+      </div>
+
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <div class="grid">
+      <div class="col-6 text-right">
+        <button pButton type="button" label="Cancel" class="p-button-outlined p-button-secondary"
+                (click)="onClose()"></button>
+      </div>
+      <div class="col-6 text-left">
+        <button pButton type="submit" icon="pi pi-check" label="Save" class="p-button-outlined"
+                (click)="onSubmitClick()"
+                [disabled]="!productForm.valid"></button>
+      </div>
+    </div>
+  </ng-template>
+
+</p-dialog>
+
+
