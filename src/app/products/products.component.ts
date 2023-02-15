@@ -20,7 +20,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   destroyNotifier$ = new Subject();
 
-  loading$: Observable<boolean|any>;
+  loading$: Observable<boolean | any>;
 
   constructor(private service: ProductsService, private selectedProductsService: SelectedProductsService,
               private eventService: EventService, private messageService: MessageService) {
@@ -30,15 +30,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.service.loaded$.pipe(
-      takeUntil(this.destroyNotifier$)
-    ).subscribe(status => {
-      if (!status) {
-        this.service.getWithQuery({limit: '0', skip: '0', ordering: '-id'});
-      }
-    })
 
-
+    this.service.getWithQuery({limit: '0', skip: '0', ordering: '-id'});
 
     this.eventService.removeProductEvent.pipe(
       takeUntil(this.destroyNotifier$)
@@ -51,10 +44,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
 
-
-
   removeProduct(product: IProduct) {
-    this.service.delete(product).subscribe(()=>{
+    this.service.delete(product).subscribe(() => {
       this.messageService.add({
         severity: 'info',
         summary: 'Removed',
