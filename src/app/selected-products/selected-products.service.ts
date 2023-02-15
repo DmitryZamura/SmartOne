@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {IProduct} from "../products/models/product";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, concatWith} from "rxjs";
 import {MessageService} from "primeng/api";
 
 @Injectable({
@@ -14,24 +14,28 @@ export class SelectedProductsService {
   }
 
 
-addProductsToLocalStore(products: IProduct[], selected: boolean) {
+  addProductsToLocalStore(products: IProduct[], selected: boolean) {
     this.setProducts(products)
-  if (selected) {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Saved',
-      detail: 'The product has been successfully added to your favorites)'
-    });
-  } else {
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Removed',
-      detail: 'The product has been successfully removed from the saved)'
-    });
+    if (selected) {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Saved',
+        detail: 'The product has been successfully added to your favorites)'
+      });
+    } else {
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Removed',
+        detail: 'The product has been successfully removed from the saved)'
+      });
+    }
+
   }
 
-}
-private setProducts(products: IProduct[]) {
+  private setProducts(products: IProduct[]) {
+    products = products.map(value => {
+      return {...value, selected: true};
+    });
     localStorage.setItem('products', JSON.stringify(products));
     this.selectedProducts$.next(products);
   }
