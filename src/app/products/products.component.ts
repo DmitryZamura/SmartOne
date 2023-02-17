@@ -1,9 +1,8 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {ProductsService} from "./store/products.service";
 import {Observable, Subject, takeUntil} from "rxjs";
 import {IProduct} from "./models/product";
 import {SelectedProductsService} from "../selected-products/selected-products.service";
-import {EditProductComponent} from "./edit-product/edit-product.component";
 import {EventService} from "../helpers/event.service";
 import {MessageService} from "primeng/api";
 
